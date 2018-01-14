@@ -13,4 +13,6 @@ public interface IQueue<Item> extends Iterable<Item> {
 
     int size();
 
+    String toString();
+
 }

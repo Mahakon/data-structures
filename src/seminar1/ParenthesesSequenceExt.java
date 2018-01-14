@@ -24,9 +24,20 @@ public class ParenthesesSequenceExt {
     private static final char RIGHT_BRACKET  = ']';
 
     // sequence = "()()" | "(({}[]))[[[" | "{}" | ...
-    private static boolean isBalanced(String sequence) {
-        /* TODO: implement it */
-        return false;
+    public static boolean isBalanced(String sequence) {
+        char[] stack;
+        stack = new char[sequence.length()];
+        int head = 0;
+        boolean isBalanced = true;
+        for (int i = 0; i < sequence.length() && isBalanced; i++) {
+            char c = sequence.charAt(i);
+            if (LEFT_PAREN == c || LEFT_BRACE == c || LEFT_BRACKET == c) stack[head++] = c;
+            if (c == RIGHT_PAREN && (head == 0 || stack[--head] != LEFT_PAREN)) isBalanced = false;
+            if (c == RIGHT_BRACE && (head == 0 || stack[--head] != LEFT_BRACE)) isBalanced = false;
+            if (c == RIGHT_BRACKET && (head == 0 || stack[--head] != LEFT_BRACKET)) isBalanced = false;
+        }
+        isBalanced = isBalanced && head == 0;
+        return isBalanced;
     }
 
     public static void main(String[] args) {

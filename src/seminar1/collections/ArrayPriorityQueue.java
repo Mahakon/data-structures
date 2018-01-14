@@ -1,100 +1,171 @@
 package seminar1.collections;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 
 public class ArrayPriorityQueue<Key extends Comparable<Key>> implements IPriorityQueue<Key> {
+    private static final int DEFAULT_CAPACITY = 10;
 
     private Key[] elementData;
+    public int size = 0;
     private Comparator<Key> comparator;
 
+    @SuppressWarnings("unchecked")
     public ArrayPriorityQueue() {
-        /* TODO: implement it — O(n) */
+        elementData =  (Key[]) new Comparable[DEFAULT_CAPACITY];
     }
 
+    @SuppressWarnings("unchecked")
     public ArrayPriorityQueue(Comparator<Key> comparator) {
-        /* TODO: implement it — O(n) */
+        this();
         this.comparator = comparator;
     }
 
     @Override
     public void add(Key key) {
-        /* TODO: implement it — O(log n) */
+        if (size == elementData.length) {
+            grow();
+        }
+
+        elementData[size++] = key;
+        shiftUp();
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Key peek() {
-        /**
-         * TODO: implement it — O(1)
-         * Посмотреть на минимальный элемент
-         */
-        return null;
+        return elementData[0];
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Key extractMin() {
-        /**
-         * TODO: implement it — O(log n)
-         * Достать минимальный элемент
-         *  и перестроить кучу
-         */
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        if (size < elementData.length/4 + 1) {
+            shrink();
+        }
+
+        Key min = elementData[0];
+        elementData[0] = elementData[size-1];
+        elementData[size] = null;
+        size--;
+        shiftDown();
+        return min;
     }
 
     @Override
     public boolean isEmpty() {
-        /* TODO: implement it */
-        return false;
+        return size == 0;
     }
 
     @Override
     public int size() {
-        /* TODO: implement it */
-        return 0;
+        return size;
     }
 
-    private void siftUp() {
-        /**
-         * TODO: implement it — O(log n)
-         * Просеивание вверх —
-         *  подъём элемента больше родителей
-         */
+    @SuppressWarnings("unchecked")
+    private void shiftUp() {
+        int position = size-1;
+        while (greater(position, (position-1) / 2) && position != 0) {
+            Key a = elementData[position];
+            elementData[position] = elementData[(position - 1) / 2];
+            elementData[(position - 1) / 2] = a;
+            position = (position - 1) / 2;
+        }
     }
 
-    private void siftDown() {
-        /**
-         * TODO: implement it — O(log n)
-         * Просеивание вниз
-         *  спуск элемента меньше детей
-         */
+    @SuppressWarnings("unchecked")
+    private void shiftDown() {
+        int position = 0;
+        int leftChild;
+        int rightChild;
+        int smallestChild;
+        while (true) {
+            leftChild = position * 2 + 1;
+            rightChild = position * 2 + 2;
+            smallestChild = position;
+
+            if (leftChild < size  && greater(leftChild, smallestChild)) {
+                smallestChild = leftChild;
+            }
+
+            if (rightChild < size && greater(rightChild, smallestChild)) {
+                smallestChild = rightChild;
+            }
+
+            if (smallestChild == position) {
+                break;
+            }
+
+            Key a = elementData[position];
+            elementData[position] = elementData[smallestChild];
+            elementData[smallestChild] = a;
+            position = smallestChild;
+
+        }
+
     }
 
+    @SuppressWarnings("unchecked")
     private void grow() {
-        /**
-         * TODO: implement it
-         * Если массив заполнился,
-         * то увеличить его размер в полтора раз
-         */
+        changeCapacity(elementData.length*3/2 + 1);
     }
 
+    @SuppressWarnings("unchecked")
     private void shrink() {
-        /**
-         * TODO: implement it
-         * Если количество элементов в четыре раза меньше,
-         * то уменьшить его размер в два раза
-         */
+        changeCapacity(elementData.length/2 + 1);
     }
 
+    @SuppressWarnings("unchecked")
     private boolean greater(int i, int j) {
         return comparator == null
-                ? elementData[i].compareTo(elementData[j]) > 0
-                : comparator.compare(elementData[i], elementData[j]) > 0
-                ;
+                ? (elementData[i]).compareTo(elementData[j]) > 0
+                : comparator.compare(elementData[i], elementData[j]) > 0;
     }
+
+    private void changeCapacity(int newCapacity) {
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+
 
     @Override
     public Iterator<Key> iterator() {
-        /* TODO: implement it */
-        return null;
+        return new ArrayPriorityQueueIterator();
     }
+
+    private class ArrayPriorityQueueIterator implements Iterator<Key> {
+
+        private int currentPosition = -1;
+
+        @Override
+        public boolean hasNext() {
+            return currentPosition != size-1;
+        }
+
+        @Override
+        public Key next() {
+            return elementData[++currentPosition];
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        String value = "[";
+
+        for (int i = 0; i < size; i++) {
+            value += elementData[i].toString();
+            if (i != size - 1) {
+                value += ", ";
+            }
+        }
+
+        value += "]";
+
+        return value;
+    }
+
 }

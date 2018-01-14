@@ -8,7 +8,8 @@ public class ArrayStack<Item> implements IStack<Item> {
     private static final int DEFAULT_CAPACITY = 10;
 
     private Item[] elementData;
-    private int size;
+    private int size = 0;
+    private int head = -1;
 
     @SuppressWarnings("unchecked")
     public ArrayStack() {
@@ -17,13 +18,26 @@ public class ArrayStack<Item> implements IStack<Item> {
 
     @Override
     public void push(Item item) {
-        /* TODO: implement it */
+        size++;
+        if (size > elementData.length) {
+            grow();
+        }
+        elementData[++head] = item;
     }
 
     @Override
     public Item pop() {
-        /* TODO: implement it */
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        size--;
+        if (size < elementData.length/4 + 1) {
+            shrink();
+        }
+        Item h = elementData[head];
+        elementData[head] = null;
+        head--;
+        return h;
     }
 
     @Override
@@ -37,19 +51,11 @@ public class ArrayStack<Item> implements IStack<Item> {
     }
 
     private void grow() {
-        /**
-         * TODO: implement it
-         * Если массив заполнился,
-         * то увеличить его размер в полтора раз
-         */
+        changeCapacity(elementData.length*3/2 + 1);
     }
 
     private void shrink() {
-        /**
-         * TODO: implement it
-         * Если количество элементов в четыре раза меньше,
-         * то уменьшить его размер в два раза
-         */
+        changeCapacity(elementData.length/2 + 1);
     }
 
     private void changeCapacity(int newCapacity) {
@@ -75,6 +81,22 @@ public class ArrayStack<Item> implements IStack<Item> {
             return elementData[--currentPosition];
         }
 
+    }
+
+    @Override
+    public String toString() {
+        String value = "[";
+
+        for (int i = 0; i < size; i++) {
+            value += elementData[i].toString();
+            if (i != size - 1) {
+                value += ", ";
+            }
+        }
+
+        value += "]";
+
+        return value;
     }
 
 }
