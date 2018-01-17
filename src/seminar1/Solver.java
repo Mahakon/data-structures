@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import seminar1.collections.LinkedStack;
-
 /**
  * ( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) ) = 101
  * ( 1 + ( 5 * ( 4 * 5 ) ) ) ( 1 + ( 5 * 20 ) ) = 101
@@ -24,51 +22,10 @@ public class Solver {
     private static final char TIMES        = '*';
     private static final char DIVISION     = '/';
 
-    public static double evaluate(String[] values) {
-        LinkedStack<String> operations = new LinkedStack<>();
-        LinkedStack<Double> nums = new LinkedStack<>();
-
-        for (int i = 0; i < values.length; i++) {
-            switch (values[i]) {
-            case "+":
-                operations.push(values[i]);
-                break;
-            case "-":
-                operations.push(values[i]);
-                break;
-            case "(":
-                operations.push(values[i]);
-                break;
-            case ")":
-                nums.push(doMath(nums.pop(), nums.pop(), operations.pop()));
-                operations.pop();
-                break;
-            case "*":
-                operations.push(values[i]);
-                break;
-            case "/":
-                operations.push(values[i]);
-                break;
-            default:
-                nums.push(Double.parseDouble(values[i]));
-            }
-        }
-
-        return nums.pop();
-    }
-
-    public static Double doMath(Double a, Double b, String op) {
-        switch (op) {
-        case "+":
-            return a + b;
-        case "-":
-            return a - b;
-        case "*":
-            return a * b;
-        case "/":
-            return a / b;
-        }
-        return 0d;
+    private static double evaluate(String[] values) {
+        /* TODO: implement it */
+        // Double.valueOf(values[i])
+        return 0D;
     }
 
     public static void main(String[] args) {

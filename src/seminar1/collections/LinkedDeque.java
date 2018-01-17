@@ -150,7 +150,7 @@ public class LinkedDeque<Item> implements IDeque<Item> {
                 value += ", ";
             }
 
-            el = el.next;
+            el = el.prev;
         }
 
         value += "]";

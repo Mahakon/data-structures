@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import seminar1.collections.LinkedStack;
-
 /**
  * ( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) ) = 101
  * ( 1 + ( 5 * ( 4 * 5 ) ) )
@@ -32,96 +30,9 @@ public class SolverExt {
     private static final char TIMES        = '*';
     private static final char DIVISION     = '/';
 
-    public static double evaluate(String[] values) {
-        String postFix = getPostFixExpression(values);
-        values = postFix.split(" ");
-        LinkedStack<Double> operandStack = new LinkedStack<>();
-
-        for (String token : values) {
-            if (isNumber(token)) {
-                operandStack.push(Double.parseDouble(token));
-            } else {
-                double operandB = operandStack.pop();
-                double operandA = operandStack.pop();
-                double result = doMath(token, operandA, operandB);
-                operandStack.push(result);
-            }
-        }
-
-        return operandStack.pop();
-    }
-
-    private static double doMath(String op, double a, double b) {
-        switch (op) {
-        case "*":
-            return a * b;
-        case "/":
-            return a / b;
-        case "+":
-            return a + b;
-        case "-":
-            return a - b;
-        }
-        return 0;
-    }
-
-    public static boolean isNumber(String expr) {
-        if(expr.matches("\\d+\\.\\d+")){
-            return true;
-        }
-
-        return false;
-    }
-
-    private static String getPostFixExpression(String[] values) {
-        LinkedStack<String> opStack = new LinkedStack<>();
-        LinkedStack<String> postFixList = new LinkedStack<>();
-
-        for (String token : values) {
-            //number
-            if (isNumber(token)) {
-                postFixList.push(token + " ");
-            } else if (token.equals("(")) {
-                opStack.push(token);
-            } else if (token.equals(")")) {
-                String topToken = opStack.pop();
-                while (!topToken.equals("(")) {
-                    postFixList.push(topToken + " ");
-                    topToken = opStack.pop();
-                }
-            } else {
-                while (!opStack.isEmpty() && (getPriority(opStack.peek()) >= getPriority(token))) {
-                    postFixList.push(opStack.pop() + " ");
-                }
-                opStack.push(token);
-            }
-        }
-
-        while (!opStack.isEmpty()) {
-            postFixList.push(opStack.pop() + " ");
-        }
-
-        StringBuilder builder = new StringBuilder();
-        while (!postFixList.isEmpty()) {
-            builder.append(postFixList.pop());
-        }
-
-        builder.deleteCharAt(builder.length() - 1);
-        return builder.reverse().toString();
-    }
-
-    private static int getPriority(String op) {
-        switch (op) {
-        case "*":
-        case "/":
-            return 3;
-        case "+":
-        case "-":
-            return 2;
-        case "(":
-            return 1;
-        }
-        return -1;
+    private static double evaluate(String[] values) {
+        /* TODO: implement it */
+        return 0D;
     }
 
     public static void main(String[] args) {

@@ -8,8 +8,7 @@ public class ArrayStack<Item> implements IStack<Item> {
     private static final int DEFAULT_CAPACITY = 10;
 
     private Item[] elementData;
-    private int size = 0;
-    private int head = -1;
+    private int size;
 
     @SuppressWarnings("unchecked")
     public ArrayStack() {
@@ -18,26 +17,13 @@ public class ArrayStack<Item> implements IStack<Item> {
 
     @Override
     public void push(Item item) {
-        size++;
-        if (size > elementData.length) {
-            grow();
-        }
-        elementData[++head] = item;
+        /* TODO: implement it */
     }
 
     @Override
     public Item pop() {
-        if (isEmpty()) {
-            return null;
-        }
-        size--;
-        if (size < elementData.length/4 + 1) {
-            shrink();
-        }
-        Item h = elementData[head];
-        elementData[head] = null;
-        head--;
-        return h;
+        /* TODO: implement it */
+        return null;
     }
 
     @Override
@@ -51,11 +37,19 @@ public class ArrayStack<Item> implements IStack<Item> {
     }
 
     private void grow() {
-        changeCapacity(elementData.length*3/2 + 1);
+        /**
+         * TODO: implement it
+         * Если массив заполнился,
+         * то увеличить его размер в полтора раз
+         */
     }
 
     private void shrink() {
-        changeCapacity(elementData.length/2 + 1);
+        /**
+         * TODO: implement it
+         * Если количество элементов в четыре раза меньше,
+         * то уменьшить его размер в два раза
+         */
     }
 
     private void changeCapacity(int newCapacity) {
@@ -81,22 +75,6 @@ public class ArrayStack<Item> implements IStack<Item> {
             return elementData[--currentPosition];
         }
 
-    }
-
-    @Override
-    public String toString() {
-        String value = "[";
-
-        for (int i = 0; i < size; i++) {
-            value += elementData[i].toString();
-            if (i != size - 1) {
-                value += ", ";
-            }
-        }
-
-        value += "]";
-
-        return value;
     }
 
 }

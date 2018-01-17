@@ -1,7 +1,6 @@
-package tests.iterators;
-
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +12,19 @@ import seminar1.iterators.PeekingIncreasingIterator;
 
 import static junit.framework.TestCase.assertTrue;
 
+/**
+ * Класс тестирующий {@link seminar1.iterators.PeekingIncreasingIterator}
+ */
+
 @RunWith(value = Parameterized.class)
 public class TestPeekingIncreasingIterator {
+
     IncreasingIterator testClass;
 
     @Before
     public void setUp() {
-        testClass = new PeekingIncreasingIterator(array[0], array[1], array[2]);
+        testClass = new PeekingIncreasingIterator(
+                array[0], array[1], array[2], array[3]);
     }
 
     @Parameterized.Parameter
@@ -28,15 +33,15 @@ public class TestPeekingIncreasingIterator {
     @Parameterized.Parameters(name = "{index}")
     public static Collection<int[]> data() {
         return Arrays.asList(new int[][] {
-                {0, 10, 5},
-                {4, 100, 10},
-                {23, 100, 20},
-                {1, 400, 100}
+                {0, 10, 5, 3},
+                {4, 100, 10, 3},
+                {23, 100, 20, 4},
+                {1, 400, 100, 5}
         });
     }
 
     @Test
-    public void test() {
+    public void testFunctionality() {
         int prev = -1;
         int curr = -1;
 

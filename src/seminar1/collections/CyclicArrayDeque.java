@@ -22,6 +22,7 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
         if (size > elementData.length) {
             grow();
         }
+
         if (head > 0 && tail == elementData.length-1) {
             Item[] newDate = (Item[]) new Integer[elementData.length];
             System.arraycopy(elementData, head, newDate, 0, size-1);
@@ -33,6 +34,7 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
         if (tail == -1) {
             head = 0;
         }
+
         elementData[++tail] = item;
     }
 
@@ -48,6 +50,7 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
                 System.arraycopy(elementData, 0, newDate, 1, size-1);
                 elementData = newDate;
             }
+
             head = 1;
             tail++;
         }
@@ -60,15 +63,18 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
         if (isEmpty()) {
             return null;
         }
+
         size--;
         if (size < elementData.length/4 + 1) {
             shrink();
             head = 0;
             tail = size;
         }
+
         Item h = elementData[head];
         elementData[head] = null;
         head++;
+
         return h;
     }
 
@@ -77,15 +83,18 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
         if (isEmpty()) {
             return null;
         }
+
         size--;
-        if (size < elementData.length/4 + 1) {
+        if (size < elementData.length /4 + 1) {
             shrink();
             head = 0;
             tail = size;
         }
+
         Item t = elementData[tail];
         elementData[tail] = null;
         tail--;
+
         return t;
     }
 
@@ -111,7 +120,6 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
 
-
     @Override
     public Iterator<Item> iterator() {
         return new Iterator<Item>() {
@@ -132,12 +140,21 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
                 return value;
             }
         };
-
-
     }
 
     @Override
     public String toString() {
-        return null;
+        String value = "[";
+
+        for (int i = 0; i < size; i++) {
+            value += elementData[i].toString();
+            if (i != size - 1) {
+                value += ", ";
+            }
+        }
+
+        value += "]";
+
+        return value;
     }
 }

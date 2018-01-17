@@ -20,21 +20,10 @@ public class ParenthesesSequence {
     private static final char RIGHT_PAREN    = ')';
 
     // sequence = "()()" | "((((" | ")()(" | ...
-    public static boolean isBalanced(String sequence) {
-        char[] stack;
-        stack = new char[sequence.length()];
-        int head = 0;
-        boolean isBalanced = true;
-
-        for (int i = 0; i < sequence.length() && isBalanced; i++) {
-            char c = sequence.charAt(i);
-            if (LEFT_PAREN == c) stack[head++] = c;
-            if (c == RIGHT_PAREN && (head == 0 || stack[--head] != LEFT_PAREN)) isBalanced = false;
-        }
-        isBalanced = isBalanced && head == 0;
-        return isBalanced;
+    private static boolean isBalanced(String sequence) {
+        /* TODO: implement it */
+        return false;
     }
-
 
     public static void main(String[] args) {
         try (BufferedReader lineReader = new BufferedReader(new InputStreamReader(System.in))) {
@@ -46,5 +35,4 @@ public class ParenthesesSequence {
             e.printStackTrace();
         }
     }
-
 }
