@@ -1,8 +1,10 @@
 package seminar1.collections;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 public class ArrayPriorityQueue<Key extends Comparable<Key>> implements IPriorityQueue<Key> {
     private static final int DEFAULT_CAPACITY = 10;
@@ -17,8 +19,26 @@ public class ArrayPriorityQueue<Key extends Comparable<Key>> implements IPriorit
     }
 
     @SuppressWarnings("unchecked")
+    public ArrayPriorityQueue(List<Key> collection) {
+        elementData =  (Key[]) new Comparable[DEFAULT_CAPACITY];
+        for (Key item : collection) {
+            add(item);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     public ArrayPriorityQueue(Comparator<Key> comparator) {
-        this();
+        elementData =  (Key[]) new Comparable[DEFAULT_CAPACITY];
+        this.comparator = comparator;
+    }
+
+    @SuppressWarnings("unchecked")
+    public ArrayPriorityQueue(Collection<Key> collection,
+            Comparator<Key> comparator) {
+        elementData =  (Key[]) new Comparable[DEFAULT_CAPACITY];
+        for (Key item : collection) {
+            add(item);
+        }
         this.comparator = comparator;
     }
 
@@ -122,8 +142,8 @@ public class ArrayPriorityQueue<Key extends Comparable<Key>> implements IPriorit
     @SuppressWarnings("unchecked")
     private boolean greater(int i, int j) {
         return comparator == null
-                ? (elementData[i]).compareTo(elementData[j]) > 0
-                : comparator.compare(elementData[i], elementData[j]) > 0;
+                ? (elementData[i]).compareTo(elementData[j]) < 0
+                : comparator.compare(elementData[i], elementData[j]) < 0;
     }
 
     private void changeCapacity(int newCapacity) {

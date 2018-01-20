@@ -1,12 +1,20 @@
 package seminar1.collections;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class LinkedDeque<Item> implements IDeque<Item> {
     // null<- [tail <-> .. <-> .. <-> head] ->null
     private Node<Item> head;
     private Node<Item> tail;
     private int size = 0;
+
+    public LinkedDeque(Collection<Item> collection){
+        for (Item item : collection) {
+            pushBack(item);
+        }
+    }
 
     /*
      * adds element to the head of deque
@@ -103,7 +111,7 @@ public class LinkedDeque<Item> implements IDeque<Item> {
     @Override
     public Iterator<Item> iterator() {
         return new Iterator<Item>() {
-            private Node<Item> cur = tail;
+            private Node<Item> cur = head;
 
             @Override
             public boolean hasNext() {
@@ -116,7 +124,7 @@ public class LinkedDeque<Item> implements IDeque<Item> {
             @Override
             public Item next() {
                 Item value = cur.item;
-                cur = cur.next;
+                cur = cur.prev;
                 return value;
             }
         };

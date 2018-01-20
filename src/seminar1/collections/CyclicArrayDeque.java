@@ -1,6 +1,7 @@
 package seminar1.collections;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class CyclicArrayDeque<Item> implements IDeque<Item> {
@@ -14,6 +15,13 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
 
     public CyclicArrayDeque() {
         elementData = (Item[]) new Object[DEFAULT_CAPACITY];
+    }
+
+    public CyclicArrayDeque(Collection<Item> collection){
+        this();
+        for (Item item : collection) {
+            pushBack(item);
+        }
     }
 
     @Override
