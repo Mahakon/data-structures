@@ -66,9 +66,7 @@ public class TestPriorityQueue {
 
     @Test
     public void isPeek() {
-        for (int i = 0; i < 5; i++) {
-            Assert.assertEquals(expectedQueue.peek(), queue.peek());
-        }
+        Assert.assertEquals(expectedQueue.peek(), queue.peek());
     }
 
     @Test
@@ -106,7 +104,7 @@ public class TestPriorityQueue {
         if (expectedQueue.isEmpty()) {
             Assert.assertTrue(itExpected.hasNext() == it.hasNext());
         } else {
-            Assert.assertTrue(itExpected.next() == it.next());
+            Assert.assertEquals(itExpected.next(), it.next());
         }
     }
 
