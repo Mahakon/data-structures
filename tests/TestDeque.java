@@ -89,19 +89,19 @@ public class TestDeque {
 
     @Test
     public void popFront() {
-        if (!deque.isEmpty()) {
+        try {
             Assert.assertEquals(deque.popFront(), expectedDeque.removeFirst());
-        } else {
-            Assert.assertTrue(deque.popFront() == null);
+        } catch (NoSuchElementException ex) {
+            Assert.assertTrue(true);
         }
     }
 
     @Test
     public void popBack() {
-        if (!deque.isEmpty()) {
+        try {
             Assert.assertEquals(deque.popBack(), expectedDeque.removeLast());
-        } else {
-            Assert.assertTrue(deque.popBack() == null);
+        } catch (NoSuchElementException ex){
+            Assert.assertTrue(true);
         }
     }
 

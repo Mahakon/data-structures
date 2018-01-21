@@ -3,6 +3,7 @@ package seminar1.collections;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class CyclicArrayDeque<Item> implements IDeque<Item> {
     private static final int DEFAULT_CAPACITY = 10;
@@ -69,7 +70,7 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
     @Override
     public Item popFront() {
         if (isEmpty()) {
-            return null;
+            throw new NoSuchElementException();
         }
 
         size--;
@@ -89,7 +90,7 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
     @Override
     public Item popBack() {
         if (isEmpty()) {
-            return null;
+            throw new NoSuchElementException();
         }
 
         size--;

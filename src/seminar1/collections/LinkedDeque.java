@@ -3,6 +3,7 @@ package seminar1.collections;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class LinkedDeque<Item> implements IDeque<Item> {
     // null<- [tail <-> .. <-> .. <-> head] ->null
@@ -58,7 +59,7 @@ public class LinkedDeque<Item> implements IDeque<Item> {
     @Override
     public Item popFront() {
         if (isEmpty()) {
-            return null;
+            throw new NoSuchElementException();
         }
 
         Item h = head.item;
@@ -78,7 +79,7 @@ public class LinkedDeque<Item> implements IDeque<Item> {
     @Override
     public Item popBack() {
         if (isEmpty()) {
-            return null;
+            throw new NoSuchElementException();
         }
         Item t= tail.item;
         if (head != tail) {
